@@ -3,6 +3,8 @@ import { useLogin } from "@/components/auth/useLogin";
 import { useState } from "react";
 import { createClient } from "../../utils/supabase/client";
 
+import { ProfileButton } from "@/components/auth/Profile";
+
 const supabase = createClient();
 
 export function LoginPage() {
@@ -32,23 +34,27 @@ export function LoginPage() {
   return (
     <div>
     <div>
-      <button
-        className={`p-2 rounded border border-white-100 ${selectedEmail === "admin@gmail.com" ? 'bg-blue-100' : ''}`}
-        onClick={()=>setSelectedEmail("admin@gmail.com")}
-      >Admin</button>
-
-      <button
-        className={`p-2 rounded border border-white-100 ${selectedEmail === "ggmail@gmail.com" ? 'bg-blue-100' : ''}`}
-        onClick={()=>setSelectedEmail("ggmail@gmail.com")}
-      >ggmail</button>
-      <button
-        className={`p-2 rounded border border-white-100 ${selectedEmail === "ggmail@gmail.com" ? 'bg-blue-100' : ''}`}
-        onClick={()=>setSelectedEmail("boy@gmail.com")}
-      >boy no sup</button>
-      <button
-        className={`p-2 rounded border border-white-100 ${selectedEmail === "ggmail@gmail.com" ? 'bg-blue-100' : ''}`}
-        onClick={()=>setSelectedEmail("boysupport@gmail.com")}
-      >boy sup</button>
+      <ProfileButton
+        label = "Oil"
+        email = "admin@gmail.com"
+        selectedEmail= {selectedEmail}
+        setSelectedEmail= {setSelectedEmail}
+        user = {user}
+      />
+      <ProfileButton
+        label = "Notto"
+        email = "boysupport@gmail.com"
+        selectedEmail= {selectedEmail}
+        setSelectedEmail= {setSelectedEmail}
+        user = {user}
+      />
+      <ProfileButton
+        label = "Noey"
+        email = "boy@gmail.com"
+        selectedEmail= {selectedEmail}
+        setSelectedEmail= {setSelectedEmail}
+        user = {user}
+      />
     </div>
 
     <button onClick={handleLogin}>Sign in</button><br/>
