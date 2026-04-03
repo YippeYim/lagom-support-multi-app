@@ -1,35 +1,26 @@
 'use client'
 import { useLogin } from "@/components/auth/useLogin";
 import { useState } from "react";
-import { createClient } from "../../utils/supabase/client";
+import { supabase } from "../../utils/supabase/client";
 
 import { ProfileButton } from "@/components/auth/Profile";
-
-const supabase = createClient();
+import { useStorage } from "@/components/storage/useStorage";
 
 export function LoginPage() {
   const [ selectedEmail, setSelectedEmail ] = useState();
   const [ note , setNote ] = useState([]);
 
   const { user, errorMessage, loginWithEmailPassword} = useLogin();
+  const { getTable, getProfile } = useStorage();
   const handleLogin = async () => {
-    await loginWithEmailPassword(selectedEmail, "12345");
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('*')
-      .single();
-    console.log("Your Role in DB is:", profile?.role);
+    const password = process.env.NEXT_PUBLIC_USERPASSWORD;
+    await loginWithEmailPassword(selectedEmail, password);
+    
+    // const profile = await getProfile();
+    // console.log(profile);
   }
 
-  const getTable = async () => {
-    const { data, error } = await supabase
-      .from('notes')
-      .select('*')
 
-    setNote(data);
-    console.log(data);
-    console.log(user?.id);
-  }
 
   return (
     <div>
@@ -58,7 +49,7 @@ export function LoginPage() {
     </div>
 
     <button onClick={handleLogin}>Sign in</button><br/>
-    <button onClick={getTable}>get</button>      
+    <button onClick={()=>getTable(setNote)}>get</button>      
     <h1>{user?.id}{errorMessage}</h1>
     
     {note.map((col=>(

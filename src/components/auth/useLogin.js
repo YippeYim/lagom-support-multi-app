@@ -1,7 +1,5 @@
-import { createClient } from "../../../utils/supabase/client";
+import { supabase } from "../../../utils/supabase/client";
 import { useState } from "react";
-
-const supabase = createClient()
 
 export function useLogin(){
     const [user, setUser] = useState(null);
@@ -16,7 +14,7 @@ export function useLogin(){
 
         if (error){
           console.log(error);
-          setErrorMessage(errorMessage.message);
+          setErrorMessage(error.message);
         }else{
           setErrorMessage("");
         }
